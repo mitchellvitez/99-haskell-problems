@@ -36,6 +36,19 @@ main = hspec $ do
     it "splits a list into two parts given the length of the first part" $ do
       split "abcdefghik" 3 `shouldBe` ("abc", "defghik")
 
+  describe "problem 18" $ do
+    it "extracts a slice from a list" $ do
+      slice "abcdefghik" 3 7 `shouldBe` "cdefg"
+
+  describe "problem 19" $ do
+    it "rotates a list to the left" $ do
+      rotate ['a'..'h'] 3 `shouldBe` "defghabc"
+      rotate ['a'..'h'] (-2) `shouldBe` "ghabcdef"
+
+  describe "problem 20" $ do
+    it "removes the kth element from a list" $ do
+      removeAt 2 "abcd" `shouldBe` ('b',"acd")
+
 -- problem 11
 data ListItem a = Multiple Int a | Single a
   deriving (Show, Eq)
@@ -43,11 +56,10 @@ data ListItem a = Multiple Int a | Single a
 pack [] = []
 pack l@(x:xs) = takeWhile (==x) l : pack (dropWhile (==x) xs)
 
-encodeModified = map f . pack
-  where
-    f x
-      | length x == 1 = Single (head x)
-      | otherwise = Multiple (length x) (head x)
+encodeModified = map toListItem . pack where
+  toListItem x
+    | length x == 1 = Single (head x)
+    | otherwise = Multiple (length x) (head x)
 
 -- problem 12
 decodeModified [] = []
@@ -83,3 +95,16 @@ split xs n =
     drop' _ [] = []
     drop' 0 xs = xs
     drop' n (x:xs) = drop' (n-1) xs
+
+-- problem 18
+slice xs a b = take (b-a+1) . drop (a-1) $ xs
+
+-- problem 19
+rotate xs n = suffix ++ prefix where
+  (prefix, suffix) = split xs idx
+  idx = if n < 0 then length xs + n else n 
+
+-- problem 20
+removeAt n xs = (char, rest) where
+  char = head $ drop (n-1) xs
+  rest = take (n-1) xs ++ drop n xs

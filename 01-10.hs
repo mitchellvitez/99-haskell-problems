@@ -47,11 +47,10 @@ main = hspec $ do
     it "packs consecutive duplicates into sublists" $ do
       pack "aaaabccaadeeee" `shouldBe` ["aaaa","b","cc","aa","d","eeee"]
 
-  describe "problem 9" $ do
+  describe "problem 10" $ do
     it "performs run-length encoding" $ do
       encode "aaaabccaadeeee" `shouldBe`
         [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
-
 
 -- problem 1
 myLast [] = error "no last element of empty list"
