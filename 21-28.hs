@@ -66,6 +66,12 @@ rnd_permu xs = do
   g <- getStdGen
   return $ shuffle' xs (length xs) g
 
+rnd_permu_fmap xs =
+  fmap (shuffle' xs (length xs)) getStdGen
+
+rnd_permu_fmap_op xs =
+  shuffle' xs (length xs) <$> getStdGen
+
 -- problem 26
 -- TODO
 combinations n xs = undefined

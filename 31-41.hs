@@ -1,5 +1,3 @@
-{-# LANGUAGE FlexibleContexts #-}
-
 import Test.Hspec
 import Data.List (foldl', group)
 
