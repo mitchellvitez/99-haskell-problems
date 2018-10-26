@@ -28,18 +28,17 @@ main = hspec $ do
       r <- rnd_permu "abcdef"
       length r `shouldBe` 6
 
-  -- TODO
-  -- describe "problem 26" $ do
-    -- it "generates combinations" $ do
-      -- length (combinations 3 "abcdef") `shouldBe` 220
+  describe "problem 26" $ do
+    it "generates combinations" $ do
+      length (combinations 3 "abcdefghijkl") `shouldBe` 220
 
   -- TODO
   -- describe "problem 27" $ do
 
-  -- describe "problem 28" $ do
-  --   it "sorts a list of lists by length of sublist" $ do
-  --     lsort ["abc","de","fgh","de","ijkl","mn","o"] `shouldBe`
-  --       ["o","de","de","mn","abc","fgh","ijkl"]
+  describe "problem 28" $ do
+    it "sorts a list of lists by length of sublist" $ do
+      lsort ["abc","de","fgh","de","ijkl","mn","o"] `shouldBe`
+        ["o","de","de","mn","abc","fgh","ijkl"]
 
 -- problem 21
 insertAt c xs n = take (n-1) xs ++ [c] ++ drop (n-1) xs
@@ -73,11 +72,21 @@ rnd_permu_fmap_op xs =
   shuffle' xs (length xs) <$> getStdGen
 
 -- problem 26
--- TODO
-combinations n xs = undefined
+combinations 0 _ = [[]]
+combinations n xs = do
+  index <- [1..length xs]
+  ys <- combinations (n-1) $ drop index xs
+  return $ xs !! (index-1) : ys
 
 -- problem 27
 -- TODO
 
 --problem 28
--- TODO
+lsort :: [[a]] -> [[a]]
+lsort = qsort (\x y -> length x < length y)
+
+qsort :: (a -> a -> Bool) -> [a] -> [a]
+qsort _ [] = []
+qsort cmp (x:xs) = qsort' less ++ [x] ++ qsort' (not . less)
+  where less = flip cmp x
+        qsort' = qsort cmp . flip filter xs

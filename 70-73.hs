@@ -26,3 +26,9 @@ main = hspec $ do
 
 -- problem 70C
 nnodes (Node _ xs) = 1 + (sum $ map nnodes xs)
+
+-- TODO
+-- problem 70
+-- problem 71
+-- problem 72
+-- problem 73

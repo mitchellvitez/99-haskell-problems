@@ -46,3 +46,12 @@ atLevel (Branch x l r) n
   | n == 1 = [x]
   | n > 1 = atLevel l (n-1) ++ atLevel r (n-1)
   | otherwise = []
+
+-- TODO
+-- problem 63
+-- problem 64
+-- problem 65
+-- problem 66
+-- problem 67A
+-- problem 68
+-- problem 69
